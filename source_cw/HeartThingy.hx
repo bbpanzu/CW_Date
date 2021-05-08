@@ -20,8 +20,7 @@ class HeartThingy extends FlxSprite
 		scrollFactor.set(0.8,0.8);
 		antialiasing = true;
 		active = true;
-		blend = "overlay";
-		trace("added heart");
+		alpha = 0.8;
 		
 	}
 	
@@ -37,6 +36,7 @@ class HeartThingy extends FlxSprite
 		
 		animation.play("bump"); 
 		if (alpha > 0){
+			active = false;
 			super.update(elapsed);
 		}else{
 			visible = false;
