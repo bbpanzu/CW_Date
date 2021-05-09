@@ -69,7 +69,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
-		perSongOffset = new FlxText(5, FlxG.height - 18, 0, "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.', 12);
+		perSongOffset = new FlxText(5, FlxG.height - 24, 0, "Additive Offset (Mouse Wheel): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.', 12);
 		perSongOffset.scrollFactor.set();
 		perSongOffset.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
@@ -115,39 +115,14 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		
 		#if cpp
-			else if (leftP)
+			if (FlxG.mouse.wheel !=0)//scroll wheel feels better and is faster
 			{
 				oldOffset = PlayState.songOffset;
-				PlayState.songOffset -= 1;
+				PlayState.songOffset += FlxG.mouse.wheel;
 				sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
 				perSongOffset.text = "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.';
 
 				// Prevent loop from happening every single time the offset changes
-				if(!offsetChanged)
-				{
-					grpMenuShit.clear();
-
-					menuItems = ['Restart Song', 'Exit to menu'];
-
-					for (i in 0...menuItems.length)
-					{
-						var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-						songText.isMenuItem = true;
-						songText.targetY = i;
-						grpMenuShit.add(songText);
-					}
-
-					changeSelection();
-
-					cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-					offsetChanged = true;
-				}
-			}else if (rightP)
-			{
-				oldOffset = PlayState.songOffset;
-				PlayState.songOffset += 1;
-				sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
-				perSongOffset.text = "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.';
 				if(!offsetChanged)
 				{
 					grpMenuShit.clear();

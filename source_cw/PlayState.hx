@@ -1,6 +1,7 @@
 package;
 
 import flixel.group.FlxSpriteGroup;
+import flixel.util.FlxAxes;
 import haxe.Exception;
 import openfl.geom.Matrix;
 import openfl.display.BitmapData;
@@ -85,7 +86,8 @@ class PlayState extends MusicBeatState
 
 	public static var rep:Replay;
 	public static var loadRep:Bool = false;
-
+	var film:FlxSprite = new FlxSprite(0, 0);
+	var title:FlxSprite = new FlxSprite(0, 0);
 	public static var noteBools:Array<Bool> = [false, false, false, false];
 	public var dateThingyEnded:Bool = false;
 	var halloweenLevel:Bool = false;
@@ -698,7 +700,7 @@ class PlayState extends MusicBeatState
 								
 								var citycolor:FlxSprite = new FlxSprite( -125, -150.75);
 								citycolor.loadGraphic(Paths.image("date/citycolor"));
-								citycolor.scrollFactor.set();
+								citycolor.scrollFactor.set(0,0.9);
 								citycolor.active = false;
 								
 								
@@ -727,6 +729,9 @@ class PlayState extends MusicBeatState
 								characters_walking.animation.play("daliaayanna");
 								
 								
+								var blackshit:FlxSprite = new FlxSprite(0, -1174.35).makeGraphic(1280,400,FlxColor.BLACK);
+								blackshit.active = false;
+								blackshit.scrollFactor.set(0,1);
 								
 								var wallbg:FlxSprite = new FlxSprite(-208.05,-774.35).loadGraphic(Paths.image("date/wallbg"));
 								wallbg.active = false;
@@ -761,6 +766,23 @@ class PlayState extends MusicBeatState
 							
 						}
 						
+								film.frames = Paths.getSparrowAtlas("date/film");
+								film.animation.addByPrefix("idle", "film", 24);
+								film.antialiasing = true;
+								film.screenCenter();
+								film.animation.play("idle");
+								film.scrollFactor.set();
+								title.frames = Paths.getSparrowAtlas("date/title");
+								title.animation.addByIndices("whitroll", "title", [0,1],"", 12);
+								title.animation.addByIndices("perfume", "title", [2,3],"", 12);
+								title.animation.addByIndices("heartbass", "title", [4,5],"", 12);
+								title.antialiasing = true;
+								title.screenCenter();
+								title.animation.play(SONG.song.toLowerCase());
+								title.scrollFactor.set();
+								
+								add(film);
+								add(title);
 				}
 			default:
 			{
@@ -850,6 +872,7 @@ class PlayState extends MusicBeatState
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 			case 'carol_date':
+				
 				dad.setPosition(84.05, -5);
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 		}
@@ -883,6 +906,7 @@ class PlayState extends MusicBeatState
 			case 'date':
 				boyfriend.setPosition(409, -5.75);
 				gf.setPosition(0, -999);
+				gf.visible = false;
 			case 'schoolEvil':
 				if(FlxG.save.data.distractions){
 				// trailArea.scrollFactor.set();
@@ -1321,6 +1345,10 @@ class PlayState extends MusicBeatState
 				case 0:
 					FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
 					dateThingyEnded = true;
+					film.active = false;
+					title.active = false;
+					FlxTween.tween(film, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
+					FlxTween.tween(title, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 				case 1:
 					var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
 					ready.scrollFactor.set();
@@ -3363,24 +3391,22 @@ class PlayState extends MusicBeatState
 		{
 			resyncVocals();
 		}
-		if(FlxG.save.data.distractions){
 			switch(SONG.song.toLowerCase()){
 				case "perfume":
 					//trace("skill issue");//traces "skill issue"
 					//FlxG.mouse.visible = true;
 					if (curBeat > 135){//the heart shits in the bg of the song when it gets all lovey and shit
-						heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),500,FlxG.random.float(0.8, 1.2)));
+						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),500,FlxG.random.float(0.8, 1.2)));
 					}
 				case "whitroll":
 					if (curBeat > 135){//the heart shits in the bg of the song when it gets all lovey and shit
-						heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),700,FlxG.random.float(1.3, 1.5)));
+						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),700,FlxG.random.float(1.3, 1.5)));
 					}
 				case "heartbass":
 					if (curBeat > 135){//yea
-						heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),FlxG.random.float(1.8,2.4)));
+						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),FlxG.random.float(1.8,2.4)));
 					}
 			}
-		}
 		#if windows
 		if (executeModchart && luaModchart != null)
 		{
