@@ -624,7 +624,7 @@ class Character extends FlxSprite
 				case 'gf':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
-						danced = !danced;
+						danced = PlayState.cbeat % 2 == 0;
 
 						if (danced)
 							playAnim('danceRight',true);
@@ -632,7 +632,7 @@ class Character extends FlxSprite
 							playAnim('danceLeft',true);
 					}
 				case 'carol_date':
-						danced = !danced;
+						danced = PlayState.cbeat % 2 == 0;
 
 						if (danced)
 							playAnim('danceRight',true);
@@ -642,7 +642,7 @@ class Character extends FlxSprite
 				case 'gf-christmas':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
-						danced = !danced;
+						danced = PlayState.cbeat % 2 == 0;
 
 						if (danced)
 							playAnim('danceRight');
@@ -653,7 +653,7 @@ class Character extends FlxSprite
 				case 'gf-car':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
-						danced = !danced;
+						danced = PlayState.cbeat % 2 == 0;
 
 						if (danced)
 							playAnim('danceRight');
@@ -663,16 +663,16 @@ class Character extends FlxSprite
 				case 'gf-pixel':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
-						danced = !danced;
+						danced = PlayState.cbeat % 2 == 0;
 
-						if (danced)
+						if (PlayState.cbeat % 2 == 0)
 							playAnim('danceRight');
 						else
 							playAnim('danceLeft');
 					}
 
 				case 'spooky':
-					danced = !danced;
+					danced = PlayState.cbeat % 2 == 0;//because there was this bug shit where characters would glitch
 
 					if (danced)
 						playAnim('danceRight');

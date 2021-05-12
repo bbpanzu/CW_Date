@@ -83,6 +83,7 @@ class PlayState extends MusicBeatState
 
 	public static var songPosBG:FlxSprite;
 	public static var songPosBar:FlxBar;
+	public static var cbeat:Int = 0;
 
 	public static var rep:Replay;
 	public static var loadRep:Bool = false;
@@ -169,6 +170,14 @@ class PlayState extends MusicBeatState
 	var trainSound:FlxSound;
 
 	var limo:FlxSprite;
+	
+	
+	var sky_heartbass:FlxSprite;
+	var farris_wheel:FlxSprite;
+	var farris_seat:FlxSpriteGroup = new FlxSpriteGroup();
+	var plane:FlxSprite;
+	
+	
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
 	var fastCar:FlxSprite;
 	var songName:FlxText;
@@ -225,7 +234,6 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		instance = this;
-		
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -763,6 +771,61 @@ class PlayState extends MusicBeatState
 								add(skyscrapers);
 								add(heartsThings);
 								add(balc);
+							
+							case "heartbass":
+								sky_heartbass = new FlxSprite(-12,-10);
+								sky_heartbass.frames = Paths.getSparrowAtlas("date/sky_heartbass");
+								sky_heartbass.animation.addByPrefix("boom", "sky_heartbass", 24, false );
+								sky_heartbass.animation.play("boom");
+								sky_heartbass.scrollFactor.set(0.1,0.1);
+								
+								var bg_hb:FlxSprite = new FlxSprite(-185.5,220);
+								bg_hb.loadGraphic(Paths.image("date/bg_hb"));
+								bg_hb.scrollFactor.set(0.2, 0.2);
+								bg_hb.active = false;
+								
+								plane = new FlxSprite(1600,96.3);
+								plane.loadGraphic(Paths.image("date/plane"));
+								plane.scrollFactor.set(0.2, 0.2);
+								plane.active = false;
+								
+								var midg:FlxSprite = new FlxSprite(-20.5,120.1);
+								midg.loadGraphic(Paths.image("date/midg"));
+								midg.scrollFactor.set(0.5,0.5);
+								midg.active = false;
+								
+								farris_wheel = new FlxSprite(6.75,-66.4);
+								farris_wheel.frames = Paths.getSparrowAtlas("date/farris_wheel");
+								farris_wheel.animation.addByIndices("thing1", "farris_wheel",[0],"", 0, false );
+								farris_wheel.animation.addByIndices("thing2", "farris_wheel",[1],"", 0, false );
+								farris_wheel.animation.addByIndices("thing3", "farris_wheel",[2],"", 0, false );
+								farris_wheel.animation.addByIndices("thing4", "farris_wheel",[3],"", 0, false );
+								farris_wheel.animation.play("thing1");
+								farris_wheel.scrollFactor.set(0.6, 0.6);
+								
+									farris_seat.scrollFactor.set(0.6, 0.6);
+								for (i in 0...24){
+									var fs = new FlxSprite(225.85,371.1);
+									fs.loadGraphic(Paths.image("date/farris_seat"));
+									farris_seat.add(fs);
+								}
+								var fair_gate:FlxSprite = new FlxSprite(-335.3,-484.8);
+								fair_gate.loadGraphic(Paths.image("date/fair_gate"));
+								fair_gate.scrollFactor.set(0.95, 0.95);
+								
+								var chairs:FlxSprite = new FlxSprite(286.25,351.15);
+								chairs.loadGraphic(Paths.image("date/chairs"));
+								
+								
+								add(sky_heartbass);
+								add(bg_hb);
+								add(midg);
+								add(plane);
+								add(farris_wheel);
+								add(farris_seat);
+								add(heartsThings);
+								add(fair_gate);
+								add(chairs);
 							
 						}
 						
@@ -1310,9 +1373,9 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
-			dad.dance();
-			gf.dance();
-			boyfriend.playAnim('idle');
+			//dad.dance();
+			//gf.dance();
+			//boyfriend.playAnim('idle');
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 			introAssets.set('default', ['ready', "set", "go"]);
@@ -1339,25 +1402,35 @@ class PlayState extends MusicBeatState
 				}
 			}
 
+	var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));//preloading the graphics;
+	
+	var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+	
+	var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
+		
+					FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.01);//preloading the sournds
+					FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.01);
+					FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.01);
+					FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.01);
 			switch (swagCounter)
 
 			{
 				case 0:
 					FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
+					
 					dateThingyEnded = true;
 					film.active = false;
 					title.active = false;
 					FlxTween.tween(film, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 					FlxTween.tween(title, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 				case 1:
-					var ready:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
-					ready.scrollFactor.set();
-					ready.updateHitbox();
 
 					if (curStage.startsWith('school'))
 						ready.setGraphicSize(Std.int(ready.width * daPixelZoom));
+						ready.updateHitbox();
 
 					ready.screenCenter();
+					ready.scrollFactor.set();
 					add(ready);
 					FlxTween.tween(ready, {y: ready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 						ease: FlxEase.cubeInOut,
@@ -1367,34 +1440,35 @@ class PlayState extends MusicBeatState
 						}
 					});
 					FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.6);
+					
 				case 2:
-					var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
-					set.scrollFactor.set();
 
 					if (curStage.startsWith('school'))
 						set.setGraphicSize(Std.int(set.width * daPixelZoom));
-
+						set.updateHitbox();
 					set.screenCenter();
+					set.scrollFactor.set();
 					add(set);
 					FlxTween.tween(set, {y: set.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 						ease: FlxEase.cubeInOut,
 						onComplete: function(twn:FlxTween)
 						{
+							
 							set.destroy();
+							
 						}
 					});
 					FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.6);
 				case 3:
-					var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
-					go.scrollFactor.set();
 
+	
 					if (curStage.startsWith('school'))
 						go.setGraphicSize(Std.int(go.width * daPixelZoom));
-
-					go.updateHitbox();
-
+						go.updateHitbox();
 					go.screenCenter();
+					go.scrollFactor.set();
 					add(go);
+					
 					FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 						ease: FlxEase.cubeInOut,
 						onComplete: function(twn:FlxTween)
@@ -1935,6 +2009,19 @@ class PlayState extends MusicBeatState
 						}
 					}
 				}
+				if (SONG.song.toLowerCase() == "heartbass" && FlxG.save.data.distractions && farris_wheel != null){// only on perfume. probably a better way to do this
+					farris_wheel.angle += 0.25;
+					plane.x -= 1;
+					for (i in 0...24){
+						var fss = farris_seat.members[i];
+						var _angle = (farris_wheel.angle + (i/24)*360) * (Math.PI/180); // Convert to radians
+						var rotatedX = Math.cos(_angle) * (350 - 227) - Math.sin(_angle) * (350-153.85) + 227;
+						var rotatedY = Math.sin(_angle) * (350 - 227) + Math.cos(_angle) * (350 - 153.85) + 153.85;
+					
+						fss.setPosition(rotatedX-15, rotatedY);
+					}
+					if (plane.x < -610) plane.x = 1800;
+				}
 				// phillyCityLights.members[curLight].alpha -= (Conductor.crochet / 1000) * FlxG.elapsed;
 		}
 
@@ -1976,8 +2063,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.10)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.10)));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.80)));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.80)));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2228,8 +2315,8 @@ class PlayState extends MusicBeatState
 
 		if (camZooming)
 		{
-			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.8);
+			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.8);
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -2426,7 +2513,15 @@ class PlayState extends MusicBeatState
 							vocals.volume = 1;
 	
 						daNote.active = false;
-
+						strumLineNotes.members[daNote.noteData].animation.play("confirm");
+						
+						strumLineNotes.members[daNote.noteData].offset.x = -13;
+						strumLineNotes.members[daNote.noteData].offset.y = -13;
+						new FlxTimer().start(0.1, function(e:FlxTimer){
+							strumLineNotes.members[daNote.noteData].animation.play("static");
+						strumLineNotes.members[daNote.noteData].offset.x = 0;
+						strumLineNotes.members[daNote.noteData].offset.y = 0;
+						});
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
@@ -3403,8 +3498,8 @@ class PlayState extends MusicBeatState
 						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),700,FlxG.random.float(1.3, 1.5)));
 					}
 				case "heartbass":
-					if (curBeat > 135){//yea
-						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),FlxG.random.float(1.8,2.4)));
+					if (curBeat > 200 && curBeat < 205 || curBeat > 232 && curBeat < 235 || curBeat > 360 && curBeat < 420 ){//yea
+						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),650,FlxG.random.float(1.8,2.4)));
 					}
 			}
 		#if windows
@@ -3441,6 +3536,7 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
+		cbeat = curBeat;
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, (FlxG.save.data.downscroll ? FlxSort.ASCENDING : FlxSort.DESCENDING));
@@ -3453,7 +3549,10 @@ class PlayState extends MusicBeatState
 			luaModchart.executeState('beatHit',[curBeat]);
 		}
 		#end
-
+		if (SONG.song.toLowerCase() == "heartbass"){
+			sky_heartbass.animation.play("boom", true);
+			farris_wheel.animation.play("thing" + FlxG.random.int(1, 4));
+		}
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
@@ -3486,6 +3585,15 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
+		if (curSong.toLowerCase() == 'heartbass' && curBeat >= 9 && curBeat < 437)
+		{
+			FlxG.camera.shake(0.001, 0.5);
+			FlxG.camera.zoom += 0.03;
+			camHUD.zoom += 0.05;
+		}
+		
+		//do something on beat 360
+		
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));

@@ -30,7 +30,8 @@ class StoryMenuState extends MusicBeatState
 		['Pico', 'Philly', "Blammed"],
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
-		['Senpai', 'Roses', 'Thorns']
+		['Senpai', 'Roses', 'Thorns'],
+		['Whitroll', 'Perfume', 'Heartbass']
 	];
 	var curDifficulty:Int = 1;
 
@@ -43,7 +44,8 @@ class StoryMenuState extends MusicBeatState
 		['pico', 'bf', 'gf'],
 		['mom', 'bf', 'gf'],
 		['parents-christmas', 'bf', 'gf'],
-		['senpai', 'bf', 'gf']
+		['senpai', 'bf', 'gf'],
+		['', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
@@ -53,7 +55,8 @@ class StoryMenuState extends MusicBeatState
 		"PICO",
 		"MOMMY MUST MURDER",
 		"RED SNOW",
-		"Hating Simulator ft. Moawling"
+		"Hating Simulator ft. Moawling",
+		"Date Night (ft. Carol)"
 	];
 
 	var txtWeekTitle:FlxText;
