@@ -11,6 +11,7 @@ class Character extends FlxSprite
 {
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
+	public var altAnim = "";
 
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
@@ -504,6 +505,13 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'carol down', 24, false);
 				animation.addByPrefix('singLEFT', 'carol left', 24, false);
 				animation.addByPrefix('singRIGHT', 'carol right', 24, false);
+				
+				animation.addByIndices('danceLeft-alt', 'carol alt idle',[0,1,2,3,4,5,6,7,8,9,10,11],"", 24, false);
+				animation.addByIndices('danceRight-alt', 'carol alt idle',[12,13,14,15,16,17,18,19,20,21,22,23],"", 24, false);
+				animation.addByPrefix('singUP-alt', 'carol alt up', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'carol alt down', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'carol alt left', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'carol alt right', 24, false);
 
 				addOffset('danceLeft');
 				addOffset('danceRight');
@@ -511,6 +519,9 @@ class Character extends FlxSprite
 				addOffset("singRIGHT");
 				addOffset("singLEFT");
 				addOffset("singDOWN");
+				
+				addOffset('danceLeft-alt');
+				addOffset('danceRight-alt');
 				addOffset("singUP-alt");
 				addOffset("singRIGHT-alt");
 				addOffset("singLEFT-alt");
@@ -635,9 +646,9 @@ class Character extends FlxSprite
 						danced = PlayState.cbeat % 2 == 0;
 
 						if (danced)
-							playAnim('danceRight',true);
+							playAnim('danceRight');
 						else
-							playAnim('danceLeft',true);
+							playAnim('danceLeft');
 
 				case 'gf-christmas':
 					if (!animation.curAnim.name.startsWith('hair'))
@@ -679,7 +690,7 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft');
 				default:
-					playAnim('idle');
+					playAnim('idle'+altAnim);
 			}
 		}
 	}

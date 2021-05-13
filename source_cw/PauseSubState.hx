@@ -120,7 +120,7 @@ class PauseSubState extends MusicBeatSubstate
 				oldOffset = PlayState.songOffset;
 				PlayState.songOffset += FlxG.mouse.wheel;
 				sys.FileSystem.rename(songPath + oldOffset + '.offset', songPath + PlayState.songOffset + '.offset');
-				perSongOffset.text = "Additive Offset (Left, Right): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.';
+				perSongOffset.text = "Additive Offset (Mouse Wheel): " + PlayState.songOffset + " - Description - " + 'Adds value to global offset, per song.';
 
 				// Prevent loop from happening every single time the offset changes
 				if(!offsetChanged)

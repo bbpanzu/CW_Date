@@ -8,14 +8,14 @@ class HealthIcon extends FlxSprite
 	 * Used for FreeplayState! If you use it elsewhere, prob gonna annoying
 	 */
 	public var sprTracker:FlxSprite;
+	public var character:String = "";
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
-		
+		character = char;
+		if(char != "carol_date" && char != "whitty_date"){
 		loadGraphic(Paths.image('iconGrid'), true, 150, 150);
-
-		antialiasing = true;
 		animation.add('bf', [0, 1], 0, false, isPlayer);
 		animation.add('bf-car', [0, 1], 0, false, isPlayer);
 		animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
@@ -40,6 +40,16 @@ class HealthIcon extends FlxSprite
 		animation.add('monster', [19, 20], 0, false, isPlayer);
 		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
 		animation.play(char);
+		}else{
+			frames = Paths.getSparrowAtlas('date/cw_icon');
+			animation.addByIndices('carol_date','cw_icon' ,[0],"", 0, false);
+			animation.addByIndices('whitty_date','cw_icon' ,[5],"", 0, false);
+			animation.addByIndices('carol_date_boom','cw_icon' ,[1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"", 12, false);
+			animation.addByIndices('whitty_date_boom','cw_icon' ,[6,7,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],"", 12, false);
+			animation.play(char);
+		}
+		
+		antialiasing = true;
 
 		switch(char)
 		{

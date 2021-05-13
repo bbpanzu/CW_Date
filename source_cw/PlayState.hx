@@ -196,7 +196,7 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var replayTxt:FlxText;
 	var swagCounter:Int = 0;
-	var chars = ["daliaayanna", "sarvruv", "koukapi"];
+	var chars = ["daliaayanna", "sarvruv", "koukapi","selsunday"];
 
 	public static var campaignScore:Int = 0;
 
@@ -734,6 +734,15 @@ class PlayState extends MusicBeatState
 								characters_walking.animation.addByIndices("daliaayanna","characters_walking", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],"", 24,true);
 								characters_walking.animation.addByIndices("sarvruv","characters_walking", [12,13,14,15,16,17,18,19,20,21,22,23],"", 24,true);
 								characters_walking.animation.addByIndices("koukapi","characters_walking", [24,25,26,27,28,29,30,31,32,33,34,35],"", 24,true);
+								characters_walking.animation.addByIndices("selsunday", "characters_walking", [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47], "", 24, true);
+								/*
+								characters_walking.animation.addByIndices("","characters_walking", [48,49,50,51,52,53,54,55,56,57,58,59],"", 24,true);
+								characters_walking.animation.addByIndices("","characters_walking", [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71],"", 24,true);
+								characters_walking.animation.addByIndices("","characters_walking", [72,73,74,75,76,77,78,79,80,81,82,83],"", 24,true);
+								characters_walking.animation.addByIndices("","characters_walking", [84,85,86,87,88,89,90,91,92,93,94,95],"", 24,true);
+								characters_walking.animation.addByIndices("","characters_walking", [96,97,98,99,100,101,102,103,104,105,106,107],"", 24,true);
+								characters_walking.animation.addByIndices("","characters_walking", [108,109,110,111,112,113,114,115,116,117,118,119],"", 24,true);
+								*/
 								characters_walking.animation.play("daliaayanna");
 								
 								
@@ -1997,14 +2006,21 @@ class PlayState extends MusicBeatState
 						characters_walking.x -= 1;
 						if (characters_walking.x < -2001.45){
 							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name){//if it's still the same character
-								characters_walking.animation.play(chars[FlxG.random.int(0, 2)]);//change the character
+								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);//change the character
+							}
+						}
+					}else if (characters_walking.animation.curAnim.name == "salsunday" || characters_walking.animation.curAnim.name == "jojo" ){
+						characters_walking.x += 10;
+						if (characters_walking.x > 1434.4){
+							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name){//if it's still the same character
+								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);//change the character (i should make this a function)
 							}
 						}
 					}else{
 						characters_walking.x += 1;
 						if (characters_walking.x > 1434.4){
 							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name){//if it's still the same character
-								characters_walking.animation.play(chars[FlxG.random.int(0, 2)]);//change the character (i should make this a function)
+								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);//change the character (i should make this a function)
 							}
 						}
 					}
@@ -2077,16 +2093,27 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
-		if (healthBar.percent < 20)
-			iconP1.animation.curAnim.curFrame = 1;
-		else
-			iconP1.animation.curAnim.curFrame = 0;
+		if (SONG.stage != "date"){
+			if (healthBar.percent < 20)
+				iconP1.animation.curAnim.curFrame = 1;
+			else
+				iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
-		else
-			iconP2.animation.curAnim.curFrame = 0;
+			if (healthBar.percent > 80)
+				iconP2.animation.curAnim.curFrame = 1;
+			else
+				iconP2.animation.curAnim.curFrame = 0;
 
+		}else{
+			
+			if (healthBar.percent >80 ){
+				iconP2.animation.play("carol_date_boom");
+				iconP1.animation.play("whitty_date_boom");
+			}else{
+				iconP2.animation.play("carol_date");
+				iconP1.animation.play("whitty_date");
+			}
+		}
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
@@ -2482,24 +2509,30 @@ class PlayState extends MusicBeatState
 						if (SONG.song != 'Tutorial')
 							camZooming = true;
 
-						var altAnim:String = "";
+						
 	
+								dad.altAnim = "";
 						if (SONG.notes[Math.floor(curStep / 16)] != null)
 						{
-							if (SONG.notes[Math.floor(curStep / 16)].altAnim)
-								altAnim = '-alt';
+							if (SONG.notes[Math.floor(curStep / 16)].altAnim){
+								trace("alt");
+								dad.altAnim = '-alt';
+							}else{
+								dad.altAnim = "";
+								trace("no alt");
+							}
 						}
 	
 						switch (Math.abs(daNote.noteData))
 						{
 							case 2:
-								dad.playAnim('singUP' + altAnim, true);
+								dad.playAnim('singUP' + dad.altAnim,true);
 							case 3:
-								dad.playAnim('singRIGHT' + altAnim, true);
+								dad.playAnim('singRIGHT' + dad.altAnim,true);
 							case 1:
-								dad.playAnim('singDOWN' + altAnim, true);
+								dad.playAnim('singDOWN' + dad.altAnim,true);
 							case 0:
-								dad.playAnim('singLEFT' + altAnim, true);
+								dad.playAnim('singLEFT' + dad.altAnim,true);
 						}
 	
 						#if windows
@@ -2515,12 +2548,13 @@ class PlayState extends MusicBeatState
 						daNote.active = false;
 						strumLineNotes.members[daNote.noteData].animation.play("confirm");
 						
-						strumLineNotes.members[daNote.noteData].offset.x = -13;
-						strumLineNotes.members[daNote.noteData].offset.y = -13;
+						strumLineNotes.members[daNote.noteData].centerOffsets();
+						strumLineNotes.members[daNote.noteData].offset.x -= 13;
+						strumLineNotes.members[daNote.noteData].offset.y -= 13;
 						new FlxTimer().start(0.1, function(e:FlxTimer){
 							strumLineNotes.members[daNote.noteData].animation.play("static");
-						strumLineNotes.members[daNote.noteData].offset.x = 0;
-						strumLineNotes.members[daNote.noteData].offset.y = 0;
+						strumLineNotes.members[daNote.noteData].centerOffsets();
+						strumLineNotes.members[daNote.noteData].centerOffsets();
 						});
 						daNote.kill();
 						notes.remove(daNote, true);
@@ -3597,6 +3631,10 @@ class PlayState extends MusicBeatState
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+		if(healthBar.percent > 80 && SONG.stage == "date"){
+				iconP2.animation.play("carol_date_boom",true);
+				iconP1.animation.play("whitty_date_boom",true);
+		}
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
