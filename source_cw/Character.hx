@@ -512,9 +512,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN-alt', 'carol alt down', 24, false);
 				animation.addByPrefix('singLEFT-alt', 'carol alt left', 24, false);
 				animation.addByPrefix('singRIGHT-alt', 'carol alt right', 24, false);
+				
+				animation.addByPrefix('singUP-dance', 'carol alt up', 24, false);
+				animation.addByPrefix('singDOWN-dance', 'carol alt down', 24, false);
+				animation.addByPrefix('singLEFT-dance', 'carol alt left', 24, false);
+				animation.addByPrefix('singRIGHT-dance', 'carol alt right', 24, false);
 
 				addOffset('danceLeft');
 				addOffset('danceRight');
+				
 				addOffset("singUP");
 				addOffset("singRIGHT");
 				addOffset("singLEFT");
@@ -522,10 +528,16 @@ class Character extends FlxSprite
 				
 				addOffset('danceLeft-alt');
 				addOffset('danceRight-alt');
+				
 				addOffset("singUP-alt");
 				addOffset("singRIGHT-alt");
 				addOffset("singLEFT-alt");
 				addOffset("singDOWN-alt");
+				
+				addOffset("singUP-dance");
+				addOffset("singRIGHT-dance");
+				addOffset("singLEFT-dance");
+				addOffset("singDOWN-dance");
 
 				playAnim('danceLeft');
 				
@@ -534,28 +546,55 @@ class Character extends FlxSprite
 				var tex = Paths.getSparrowAtlas('date/whitty_assets');
 				frames = tex;
 				animation.addByPrefix('idle', 'whitty idle', 24, false);
+				animation.addByPrefix('idle-alt', 'whitty alt idle', 24, false);
+				
 				animation.addByPrefix('singUP', 'whitty up', 24, false);
 				animation.addByPrefix('singDOWN', 'whitty down', 24, false);
-				animation.addByPrefix('singRIGHT', 'whitty left', 24, false);
-				animation.addByPrefix('singLEFT', 'whitty right', 24, false);
-				animation.addByPrefix('singUPmiss', 'whitty up', 24, false);
-				animation.addByPrefix('singDOWNmiss', 'whitty down', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'whitty left', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'whitty right', 24, false);
+				animation.addByPrefix('singLEFT', 'whitty left', 24, false);
+				animation.addByPrefix('singRIGHT', 'whitty right', 24, false);
+				
+				animation.addByPrefix('singUP-alt', 'whitty alt up', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'whitty alt down', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'whitty alt left', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'whitty alt right', 24, false);
+				
+				animation.addByPrefix('singUP-dance', 'whitty dance up', 24, false);
+				animation.addByPrefix('singDOWN-dance', 'whitty dance down', 24, false);
+				animation.addByPrefix('singLEFT-dance', 'whitty dance left', 24, false);
+				animation.addByPrefix('singRIGHT-dance', 'whitty dance right', 24, false);
+				
+				animation.addByPrefix('singUPmiss', 'whitty miss up', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'whitty miss down', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'whitty miss left', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'whitty miss right', 24, false);
 
 				animation.addByPrefix('firstDeath', "whitty idle", 24, false);
 				animation.addByPrefix('deathLoop', "whitty idle", 24, true);
 				animation.addByPrefix('deathConfirm', "whitty idle", 24, false);
 
 				addOffset('idle');
+				addOffset('idle-alt');
+				
 				addOffset("singUP");
 				addOffset("singRIGHT");
 				addOffset("singLEFT");
 				addOffset("singDOWN");
+				
+				addOffset("singUP-alt");
+				addOffset("singRIGHT-alt");
+				addOffset("singLEFT-alt");
+				addOffset("singDOWN-alt");
+				
+				addOffset("singUP-dance");
+				addOffset("singRIGHT-dance",0,30);
+				addOffset("singLEFT-dance",0,30);
+				addOffset("singDOWN-dance");
+				
 				addOffset("singUPmiss");
 				addOffset("singRIGHTmiss");
 				addOffset("singLEFTmiss");
 				addOffset("singDOWNmiss");
+				
 				addOffset('firstDeath');
 				addOffset('deathLoop');
 				addOffset('deathConfirm');
@@ -644,12 +683,13 @@ class Character extends FlxSprite
 					}
 				case 'carol_date':
 						danced = PlayState.cbeat % 2 == 0;
-
+					if(!PlayState.dancing){
 						if (danced)
-							playAnim('danceRight');
+							playAnim('danceRight'+altAnim);
 						else
-							playAnim('danceLeft');
+							playAnim('danceLeft'+altAnim);
 
+					}
 				case 'gf-christmas':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
@@ -690,7 +730,7 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft');
 				default:
-					playAnim('idle'+altAnim);
+					if(!PlayState.dancing)playAnim('idle'+altAnim);
 			}
 		}
 	}

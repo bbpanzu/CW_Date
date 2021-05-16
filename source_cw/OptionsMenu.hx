@@ -17,6 +17,7 @@ import lime.utils.Assets;
 class OptionsMenu extends MusicBeatState
 {
 	var selector:FlxText;
+	var pootshit = ["", "", "2", "2"];
 	var curSelected:Int = 0;
 
 	var options:Array<OptionCatagory> = [
@@ -72,7 +73,7 @@ class OptionsMenu extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"+pootshit[TitleState.fun]));
 
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

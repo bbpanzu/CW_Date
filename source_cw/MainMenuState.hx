@@ -40,6 +40,7 @@ class MainMenuState extends MusicBeatState
 
 	public static var kadeEngineVer:String = "1.4.2" + nightly;
 	public static var gameVer:String = "0.2.7.1";
+	var pootshit = ["", "", "2", "2"];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -58,7 +59,7 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'+pootshit[TitleState.fun]));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.15;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -70,7 +71,7 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'+pootshit[TitleState.fun]));
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.18;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));

@@ -28,6 +28,7 @@ class FreeplayState extends MusicBeatState
 	var scoreText:FlxText;
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
+	var pootshit = ["", "", "2", "2"];
 	var intendedScore:Int = 0;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
@@ -68,7 +69,7 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'+pootshit[TitleState.fun]));
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
