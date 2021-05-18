@@ -550,23 +550,23 @@ class Character extends FlxSprite
 				
 				animation.addByPrefix('singUP', 'whitty up', 24, false);
 				animation.addByPrefix('singDOWN', 'whitty down', 24, false);
-				animation.addByPrefix('singLEFT', 'whitty left', 24, false);
-				animation.addByPrefix('singRIGHT', 'whitty right', 24, false);
+				animation.addByPrefix('singRIGHT', 'whitty left', 24, false);
+				animation.addByPrefix('singLEFT', 'whitty right', 24, false);
 				
 				animation.addByPrefix('singUP-alt', 'whitty alt up', 24, false);
 				animation.addByPrefix('singDOWN-alt', 'whitty alt down', 24, false);
-				animation.addByPrefix('singLEFT-alt', 'whitty alt left', 24, false);
-				animation.addByPrefix('singRIGHT-alt', 'whitty alt right', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'whitty alt left', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'whitty alt right', 24, false);
 				
 				animation.addByPrefix('singUP-dance', 'whitty dance up', 24, false);
 				animation.addByPrefix('singDOWN-dance', 'whitty dance down', 24, false);
-				animation.addByPrefix('singLEFT-dance', 'whitty dance left', 24, false);
-				animation.addByPrefix('singRIGHT-dance', 'whitty dance right', 24, false);
+				animation.addByPrefix('singRIGHT-dance', 'whitty dance left', 24, false);
+				animation.addByPrefix('singLEFT-dance', 'whitty dance right', 24, false);
 				
 				animation.addByPrefix('singUPmiss', 'whitty miss up', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'whitty miss down', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'whitty miss left', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'whitty miss right', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'whitty miss left', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'whitty miss right', 24, false);
 
 				animation.addByPrefix('firstDeath', "whitty idle", 24, false);
 				animation.addByPrefix('deathLoop', "whitty idle", 24, true);

@@ -1446,14 +1446,15 @@ class PlayState extends MusicBeatState
 
 					ready.screenCenter();
 					ready.scrollFactor.set();
-					add(ready);
+					
 					
 					if(curStage.toLowerCase() == "date"){
-						new FlxTimer().start((Conductor.crochet / 1000), function(){
-							ready.active = false;
-							ready.visible = false;
-						});
+						//new FlxTimer().start((Conductor.crochet / 1000), function(e:FlxTimer){
+							//ready.visible = false;
+							//ready.active = false;
+						//});
 					}else{
+						add(ready);
 						FlxTween.tween(ready, {y: ready.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 						ease: FlxEase.cubeInOut,
 						onComplete: function(twn:FlxTween)
@@ -1473,13 +1474,14 @@ class PlayState extends MusicBeatState
 						set.updateHitbox();
 					set.screenCenter();
 					set.scrollFactor.set();
-					add(set);
+					
 					if(curStage.toLowerCase() == "date"){
-						new FlxTimer().start((Conductor.crochet / 1000), function(){
-							set.active = false;
-							set.visible = false;
-						});
+						//new FlxTimer().start((Conductor.crochet / 1000), function(e:FlxTimer){
+							//set.visible = false;
+							//set.active = false;
+						//});
 					}else{
+						add(set);
 						FlxTween.tween(set, {y: set.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -1499,14 +1501,16 @@ class PlayState extends MusicBeatState
 						go.updateHitbox();
 					go.screenCenter();
 					go.scrollFactor.set();
-					add(go);
 					
-					if(curStage.toLowerCase() == "date"){
-						new FlxTimer().start((Conductor.crochet / 1000), function(){
-							go.active = false;
-							go.visible = false;
-						});
+					
+					if (curStage.toLowerCase() == "date"){
+						
+						//new FlxTimer().start((Conductor.crochet / 1000), function(e:FlxTimer){
+						//	go.visible = false;
+						//	go.active = false;
+						//});
 					}else{
+						add(go);
 						FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -2330,6 +2334,8 @@ class PlayState extends MusicBeatState
 					case 'senpai-angry':
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
+					case 'date':
+						if(dancing)camFollow.y = boyfriend.getMidpoint().y - 200;
 				}
 
 				if (dad.curCharacter == 'mom')
@@ -2366,6 +2372,8 @@ class PlayState extends MusicBeatState
 					case 'schoolEvil':
 						camFollow.x = boyfriend.getMidpoint().x - 200;
 						camFollow.y = boyfriend.getMidpoint().y - 200;
+					case 'date':
+						if(dancing)camFollow.y = boyfriend.getMidpoint().y - 200;
 				}
 			}
 		}
@@ -3213,8 +3221,8 @@ class PlayState extends MusicBeatState
 				if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && !holdArray.contains(true))
 				{
 					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-					
-						if (!PlayState.dancing){
+					/*
+						if (!PlayState.dancing && SONG.notes[curSection] != null){
 							var thereAreNotesForBF:Bool = false;
 							var l = SONG.notes[curSection].sectionNotes.length;
 							for(i in 0...l){
@@ -3222,7 +3230,7 @@ class PlayState extends MusicBeatState
 							}
 							
 							if(!thereAreNotesForBF)boyfriend.dance();
-						}
+						}*/boyfriend.dance();
 				}
 		 
 				playerStrums.forEach(function(spr:FlxSprite)
@@ -3710,14 +3718,16 @@ class PlayState extends MusicBeatState
 
 		if (!SONG.notes[Std.int(curStep / 16)].mustHitSection)
 		{
-			if (!dancing){var thereAreNotesForBF:Bool = false;
-							var l = SONG.notes[curSection].sectionNotes.length;
-							for(i in 0...l){
-								if (SONG.notes[curSection].sectionNotes[i].canBeHit) thereAreNotesForBF = true;
-							}
-							
-							if(!thereAreNotesForBF)boyfriend.dance();
-			}
+			/*
+			if (!dancing && SONG.notes[curSection].sectionNotes != null){
+				var thereAreNotesForBF:Bool = false;
+				var l = SONG.notes[curSection].sectionNotes.length;
+				for(i in 0...l){
+					if (SONG.notes[curSection].sectionNotes[i].canBeHit) thereAreNotesForBF = true;
+				}
+				trace(thereAreNotesForBF);
+				if(!thereAreNotesForBF)
+			}*/boyfriend.dance();
 		}
 
 		if (curBeat % 8 == 7 && curSong == 'Bopeebo')
