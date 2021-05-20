@@ -104,7 +104,7 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
-
+	//kade u smell ; )
 	private var vocals:FlxSound;
 
 	public static var dad:Character;
@@ -226,6 +226,7 @@ class PlayState extends MusicBeatState
 
 	private var executeModchart = false;
 
+	var updictionary:FlxSprite = new FlxSprite(1380, 171);
 	// API stuff
 	
 	public function addObject(object:FlxBasic) { add(object); }
@@ -783,6 +784,8 @@ class PlayState extends MusicBeatState
 								add(balc);
 							
 							case "heartbass":
+								updictionary.frames = Paths.getSparrowAtlas("date/updicksucker");
+								updictionary.animation.addByPrefix("updiploma", "updimitri", 24, false);
 								sky_heartbass = new FlxSprite(-12,-10);
 								sky_heartbass.frames = Paths.getSparrowAtlas("date/sky_heartbass");
 								sky_heartbass.animation.addByPrefix("boom", "sky_heartbass", 24, false );
@@ -3591,6 +3594,7 @@ class PlayState extends MusicBeatState
 						if (!dancing)boyfriend.altAnim = "-alt";
 						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),650,FlxG.random.float(1.8,2.4)));
 					}
+					
 			}
 		#if windows
 		if (executeModchart && luaModchart != null)
@@ -3642,6 +3646,12 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == "heartbass"){
 			sky_heartbass.animation.play("boom", true);
 			farris_wheel.animation.play("thing" + FlxG.random.int(1, 4));
+			if (curBeat == 360 - 16){
+				add(updictionary);
+				updictionary.x = 1280;
+				updictionary.animation.play("updiploma");
+				FlxTween.tween(updictionary, {x:0}, 22);
+			}
 		}
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{

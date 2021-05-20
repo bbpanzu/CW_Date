@@ -13,7 +13,7 @@ Dalia[X]
 Anchor[]
 Garcello[]
 
-Abigail[]
+Abigail[X]
 Hex[X]
 
 Tabi[]
@@ -21,6 +21,8 @@ AGOTI[]
 
 Pompom[]
 Static[]
+
+Bob[]
 
 
 
