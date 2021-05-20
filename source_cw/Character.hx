@@ -555,8 +555,8 @@ class Character extends FlxSprite
 				
 				animation.addByPrefix('singUP-alt', 'whitty alt up', 24, false);
 				animation.addByPrefix('singDOWN-alt', 'whitty alt down', 24, false);
-				animation.addByPrefix('singRIGHT-alt', 'whitty alt left', 24, false);
-				animation.addByPrefix('singLEFT-alt', 'whitty alt right', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'whitty alt right', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'whitty alt left', 24, false);
 				
 				animation.addByPrefix('singUP-dance', 'whitty dance up', 24, false);
 				animation.addByPrefix('singDOWN-dance', 'whitty dance down', 24, false);

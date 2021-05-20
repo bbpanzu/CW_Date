@@ -71,6 +71,8 @@ class PlayState extends MusicBeatState
 
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
+				var bfy:Float;
+				var gfy:Float;
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
@@ -85,7 +87,7 @@ class PlayState extends MusicBeatState
 	public static var songPosBG:FlxSprite;
 	public static var songPosBar:FlxBar;
 	public static var cbeat:Int = 0;
-
+	var datBitchWasSinging:Bool = false;
 	public static var rep:Replay;
 	public static var loadRep:Bool = false;
 	var film:FlxSprite = new FlxSprite(0, 0);
@@ -786,6 +788,7 @@ class PlayState extends MusicBeatState
 							case "heartbass":
 								updictionary.frames = Paths.getSparrowAtlas("date/updicksucker");
 								updictionary.animation.addByPrefix("updiploma", "updimitri", 24, false);
+								updictionary.scrollFactor.set(0.8, 0.8);
 								sky_heartbass = new FlxSprite(-12,-10);
 								sky_heartbass.frames = Paths.getSparrowAtlas("date/sky_heartbass");
 								sky_heartbass.animation.addByPrefix("boom", "sky_heartbass", 24, false );
@@ -836,6 +839,7 @@ class PlayState extends MusicBeatState
 								add(plane);
 								add(farris_wheel);
 								add(farris_seat);
+								add(updictionary);
 								add(heartsThings);
 								add(fair_gate);
 								add(chairs);
@@ -1434,7 +1438,7 @@ class PlayState extends MusicBeatState
 
 			{
 				case 0:
-					FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
+				//	FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
 					
 					dateThingyEnded = true;
 					film.active = false;
@@ -1468,7 +1472,7 @@ class PlayState extends MusicBeatState
 					}
 					
 					
-					FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.6);
+				//	FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0.6);
 					
 				case 2:
 
@@ -1495,7 +1499,7 @@ class PlayState extends MusicBeatState
 							}
 						});
 					}
-					FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.6);
+					//FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0.6);
 				case 3:
 
 	
@@ -1522,7 +1526,7 @@ class PlayState extends MusicBeatState
 							}
 						});
 					}
-					FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
+					//FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
 				case 4:
 			}
 
@@ -2079,7 +2083,14 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-		
+		if (dancing){
+			defaultCamZoom = 0.9;
+			FlxMath.lerp(bfy, boyfriend.y, 0.80);
+			FlxMath.lerp(gfy, gf.y, 0.80);
+		}else{
+			bfy = boyfriend.y;
+			gfy = gf.y;
+		}
 
 		scoreTxt.text = Ratings.CalculateRanking(songScore,songScoreDef,nps,accuracy);
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -3223,8 +3234,8 @@ class PlayState extends MusicBeatState
 				}); 
 				if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && !holdArray.contains(true))
 				{
-					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-					/*
+					/*if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+					
 						if (!PlayState.dancing && SONG.notes[curSection] != null){
 							var thereAreNotesForBF:Bool = false;
 							var l = SONG.notes[curSection].sectionNotes.length;
@@ -3233,7 +3244,8 @@ class PlayState extends MusicBeatState
 							}
 							
 							if(!thereAreNotesForBF)boyfriend.dance();
-						}*/boyfriend.dance();
+						} */ //if(!datBitchWasSinging)boyfriend.dance();
+						//datBitchWasSinging = false;
 				}
 		 
 				playerStrums.forEach(function(spr:FlxSprite)
@@ -3274,20 +3286,20 @@ class PlayState extends MusicBeatState
 
 			songScore -= 10;
 
-			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
+			if(!dancing)FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
 			// FlxG.log.add('played imss note');
-
+			
 			switch (direction)
 			{
 				case 0:
-					boyfriend.playAnim('singLEFTmiss', true);
+					if(!dancing)boyfriend.playAnim('singLEFTmiss', true);
 				case 1:
-					boyfriend.playAnim('singDOWNmiss', true);
+					if(!dancing)boyfriend.playAnim('singDOWNmiss', true);
 				case 2:
-					boyfriend.playAnim('singUPmiss', true);
+					if(!dancing)boyfriend.playAnim('singUPmiss', true);
 				case 3:
-					boyfriend.playAnim('singRIGHTmiss', true);
+					if(!dancing)boyfriend.playAnim('singRIGHTmiss', true);
 			}
 
 			#if windows
@@ -3430,6 +3442,7 @@ class PlayState extends MusicBeatState
 	
 
 						//trace(boyfriend.altAnim);
+						datBitchWasSinging = true;
 					switch (note.noteData)
 					{
 						case 2:
@@ -3591,6 +3604,7 @@ class PlayState extends MusicBeatState
 					}
 				case "heartbass":
 					if (curBeat > 200 && curBeat < 205 || curBeat > 232 && curBeat < 235 || curBeat > 360 && curBeat < 420 ){//yea
+						
 						if (!dancing)boyfriend.altAnim = "-alt";
 						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),650,FlxG.random.float(1.8,2.4)));
 					}
@@ -3646,11 +3660,10 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == "heartbass"){
 			sky_heartbass.animation.play("boom", true);
 			farris_wheel.animation.play("thing" + FlxG.random.int(1, 4));
-			if (curBeat == 360 - 16){
-				add(updictionary);
+			if (curBeat == 304){
 				updictionary.x = 1280;
 				updictionary.animation.play("updiploma");
-				FlxTween.tween(updictionary, {x:0}, 22);
+				FlxTween.tween(updictionary, {x:-80}, 12);
 			}
 		}
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
@@ -3693,17 +3706,21 @@ class PlayState extends MusicBeatState
 				camHUD.zoom += 0.05;
 			}
 			
-			dancing = curBeat > 360;
-			
+			dancing = curBeat >= 360;
+				
+			if (curBeat == 359){
+				defaultCamZoom += 0.1;
+			}
 			if (dancing){
-				var bfy:Float = boyfriend.y;
-				var gfy:Float = gf.y;
 				
-				boyfriend.y += 10;
-				gf.y += 10;
-				
-				FlxTween.tween(boyfriend, {y:bfy}, (Conductor.stepCrochet * 4 / 1000), {ease:FlxEase.circOut});
-				FlxTween.tween(gf, {y:gfy}, (Conductor.stepCrochet * 4 / 1000), {ease:FlxEase.circOut});
+				boyfriend.y += 20;
+				gf.y += 20;
+				trace(bfy + "," + boyfriend.y);
+				FlxTween.tween(boyfriend, {y:bfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
+				FlxTween.tween(gf, {y:gfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
+			}else{
+				bfy = boyfriend.y;
+				gfy = gf.y;
 			}
 			
 		}
@@ -3737,7 +3754,8 @@ class PlayState extends MusicBeatState
 				}
 				trace(thereAreNotesForBF);
 				if(!thereAreNotesForBF)
-			}*/boyfriend.dance();
+			} */ boyfriend.dance();
+			datBitchWasSinging = true;
 		}
 
 		if (curBeat % 8 == 7 && curSong == 'Bopeebo')
