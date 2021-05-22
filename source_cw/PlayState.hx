@@ -179,6 +179,8 @@ class PlayState extends MusicBeatState
 	var farris_wheel:FlxSprite;
 	var farris_seat:FlxSpriteGroup = new FlxSpriteGroup();
 	var plane:FlxSprite;
+	var backboppers:FlxSprite;
+	var frontboppers:FlxSprite;
 	
 	
 	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
@@ -238,10 +240,9 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		instance = this;
-
+		
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
-
 		sicks = 0;
 		bads = 0;
 		shits = 0;
@@ -825,13 +826,20 @@ class PlayState extends MusicBeatState
 									fs.loadGraphic(Paths.image("date/farris_seat"));
 									farris_seat.add(fs);
 								}
-								var fair_gate:FlxSprite = new FlxSprite(-335.3,-484.8);
+								var fair_gate:FlxSprite = new FlxSprite(-335.3,-444.8);
 								fair_gate.loadGraphic(Paths.image("date/fair_gate"));
 								fair_gate.scrollFactor.set(0.95, 0.95);
 								
 								var chairs:FlxSprite = new FlxSprite(286.25,351.15);
 								chairs.loadGraphic(Paths.image("date/chairs"));
 								
+								backboppers = new FlxSprite( 41.45, -169.45);
+								backboppers.loadGraphic(Paths.image("date/backboppers"));
+								backboppers.scrollFactor.set(0.9, 0.9);
+								
+								frontboppers = new FlxSprite( -54.65, -59.55);
+								frontboppers.loadGraphic(Paths.image("date/frontboppers"));
+								frontboppers.scrollFactor.set(0.93, 0.93);
 								
 								add(sky_heartbass);
 								add(bg_hb);
@@ -840,9 +848,16 @@ class PlayState extends MusicBeatState
 								add(farris_wheel);
 								add(farris_seat);
 								add(updictionary);
+								
+								add(backboppers);
+								add(frontboppers);
+								
 								add(heartsThings);
 								add(fair_gate);
 								add(chairs);
+								
+								
+								backboppers.y = frontboppers.y = 554.6;
 							
 						}
 						
@@ -1014,7 +1029,7 @@ class PlayState extends MusicBeatState
 		add(boyfriend);
 		
 		
-		if (curStage == "date"){
+		if (curStage == "date" && FlxG.save.data.distractions){
 			
 					var shade:FlxSprite = new FlxSprite(-451.05,-560.15).loadGraphic(Paths.image("date/shade"));
 					shade.scrollFactor.set();
@@ -1244,12 +1259,6 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'whitroll':
-					dateWeekIntro();
-				case 'perfume':
-					dateWeekIntro();
-				case 'heartbass':
-					dateWeekIntro();
 				default:
 					startCountdown();
 			}
@@ -1441,8 +1450,8 @@ class PlayState extends MusicBeatState
 				//	FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
 					
 					dateThingyEnded = true;
-					film.active = false;
-					title.active = false;
+					//film.active = false;
+					//title.active = false;
 					FlxTween.tween(film, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 					FlxTween.tween(title, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 				case 1:
@@ -1551,7 +1560,7 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 		{
-			if(curStage != "date")FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			if(curStage != "date" && isStoryMode)FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		}
 
 		FlxG.sound.music.onComplete = endSong;
@@ -3606,7 +3615,7 @@ class PlayState extends MusicBeatState
 					if (curBeat > 200 && curBeat < 205 || curBeat > 232 && curBeat < 235 || curBeat > 360 && curBeat < 420 ){//yea
 						
 						if (!dancing)boyfriend.altAnim = "-alt";
-						if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),650,FlxG.random.float(1.8,2.4)));
+						if(FlxG.save.data.distractions && curBeat < 360)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),650,FlxG.random.float(1.8,2.4)));
 					}
 					
 			}
@@ -3658,12 +3667,12 @@ class PlayState extends MusicBeatState
 		}
 		#end
 		if (SONG.song.toLowerCase() == "heartbass"){
-			sky_heartbass.animation.play("boom", true);
-			farris_wheel.animation.play("thing" + FlxG.random.int(1, 4));
-			if (curBeat == 304){
-				updictionary.x = 1280;
-				updictionary.animation.play("updiploma");
-				FlxTween.tween(updictionary, {x:-80}, 12);
+			if(FlxG.save.data.distractions)sky_heartbass.animation.play("boom", true);
+			if(FlxG.save.data.distractions)farris_wheel.animation.play("thing" + FlxG.random.int(1, 4));
+			if (curBeat == 302){
+				if(FlxG.save.data.distractions)updictionary.x = 1280;
+				if(FlxG.save.data.distractions)updictionary.animation.play("updiploma");
+				if(FlxG.save.data.distractions)FlxTween.tween(updictionary, {x:-80}, 12);
 			}
 		}
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
@@ -3709,15 +3718,22 @@ class PlayState extends MusicBeatState
 			dancing = curBeat >= 360;
 				
 			if (curBeat == 359){
-				defaultCamZoom += 0.1;
+				if(FlxG.save.data.distractions)defaultCamZoom += 0.1;
+				if(FlxG.save.data.distractions)FlxTween.tween(backboppers, {y:-169.45}, (Conductor.stepCrochet * 2 / 1000), {ease:FlxEase.circIn});
+				if(FlxG.save.data.distractions)FlxTween.tween(frontboppers, {y:-59.55}, (Conductor.stepCrochet * 2 / 1000), {ease:FlxEase.circIn});
 			}
 			if (dancing){
 				
 				boyfriend.y += 20;
 				gf.y += 20;
-				trace(bfy + "," + boyfriend.y);
-				FlxTween.tween(boyfriend, {y:bfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
-				FlxTween.tween(gf, {y:gfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
+				backboppers.y += 30;
+				frontboppers.y += 30;
+				//trace(bfy + "," + boyfriend.y);
+				if(FlxG.save.data.distractions)FlxTween.tween(boyfriend, {y:bfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
+				if(FlxG.save.data.distractions)FlxTween.tween(gf, {y:gfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
+				if(FlxG.save.data.distractions)FlxTween.tween(backboppers, {y:-169.45}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circOut});
+				if(FlxG.save.data.distractions)FlxTween.tween(frontboppers, {y: -59.55}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circOut});
+				if(FlxG.save.data.distractions)heartsThings.add(new HeartThingy(FlxG.random.int(0, 1280),650,FlxG.random.float(1.8,2.4)));
 			}else{
 				bfy = boyfriend.y;
 				gfy = gf.y;

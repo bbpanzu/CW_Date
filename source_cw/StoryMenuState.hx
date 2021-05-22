@@ -35,7 +35,7 @@ class StoryMenuState extends MusicBeatState
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
@@ -60,7 +60,7 @@ class StoryMenuState extends MusicBeatState
 	];
 
 	var txtWeekTitle:FlxText;
-
+	var datePort:FlxSprite = new FlxSprite(0, 56);
 	var curWeek:Int = 0;
 
 	var txtTracklist:FlxText;
@@ -77,11 +77,12 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		
 		#if windows
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Story Mode Menu", null);
 		#end
-
+		datePort.loadGraphic(Paths.image("date/datePort"));
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
@@ -198,7 +199,8 @@ class StoryMenuState extends MusicBeatState
 		updateText();
 
 		trace("Line 165");
-
+		add(datePort);
+		datePort.visible = false;
 		super.create();
 	}
 
@@ -370,6 +372,7 @@ class StoryMenuState extends MusicBeatState
 				item.alpha = 0.6;
 			bullShit++;
 		}
+		datePort.visible = curWeek == 7;
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
