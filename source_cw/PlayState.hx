@@ -1560,7 +1560,11 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 		{
-			if(curStage != "date" && isStoryMode)FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			if (curStage != "date" && isStoryMode){
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			}else{
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+			}
 		}
 
 		FlxG.sound.music.onComplete = endSong;
@@ -2075,8 +2079,8 @@ class PlayState extends MusicBeatState
 						}
 					}
 				}
-				if (SONG.song.toLowerCase() == "heartbass" && FlxG.save.data.distractions && farris_wheel != null){// only on perfume. probably a better way to do this
-					farris_wheel.angle += 0.25;
+				if (SONG.song.toLowerCase() == "heartbass" && farris_wheel != null){// only on perfume. probably a better way to do this
+					if(FlxG.save.data.distractions)farris_wheel.angle += 0.25;
 					plane.x -= 1;
 					for (i in 0...24){
 						var fss = farris_seat.members[i];
@@ -3709,8 +3713,8 @@ class PlayState extends MusicBeatState
 		}
 		if (curSong.toLowerCase() == 'heartbass')
 		{
-			if(curBeat >= 9 && curBeat < 437){
-				FlxG.camera.shake(0.0005, 0.5);
+			if(curBeat >= 9 && curBeat < 437 && FlxG.save.data.distractions){
+				
 				FlxG.camera.zoom += 0.03;
 				camHUD.zoom += 0.05;
 			}
