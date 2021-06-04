@@ -313,16 +313,9 @@ class TitleState extends MusicBeatState
 
 				http.onData = function (data:String) {
 				  
-				  	if (!MainMenuState.kadeEngineVer.contains(data.trim()) && !OutdatedSubState.leftState && MainMenuState.nightly == "")
-					{
-						trace('outdated lmao! ' + data.trim() + ' != ' + MainMenuState.kadeEngineVer);
-						OutdatedSubState.needVer = data;
-						FlxG.switchState(new OutdatedSubState());
-					}
-					else
-					{
+				  	
+						//FlxG.switchState(new VideoState('assets/videos/ara_ara/video.webm',new MainMenuState()));
 						FlxG.switchState(new MainMenuState());
-					}
 				}
 				
 				http.onError = function (error) {

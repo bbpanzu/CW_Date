@@ -16,16 +16,22 @@ Garcello[]
 Abigail[X]
 Hex[X]
 
-Tabi[]
-AGOTI[]
+Tabi[X]
+AGOTI[X]
 
 Pompom[]
 Static[]
 
 Bob[]
+Macy[]
 
 
 
 Zardy []
 Beach Brother[]
 Selever[]
+
+
+
+
+

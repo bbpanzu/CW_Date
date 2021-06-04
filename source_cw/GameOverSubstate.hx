@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
@@ -13,9 +14,15 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = "";
+	var cutscene:FlxSprite = new FlxSprite();
+	var sh:Float = 0.03;
 
 	public function new(x:Float, y:Float)
 	{
+		cutscene.frames = Paths.getSparrowAtlas("date/boom");
+		cutscene.scrollFactor.set();
+		cutscene.animation.addByPrefix("boom", "Symbol 79", 24, false);
+		cutscene.antialiasing = true;
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
 		switch (PlayState.SONG.player1)
@@ -23,6 +30,8 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'bf-pixel':
 				stageSuffix = '-pixel';
 				daBf = 'bf-pixel-dead';
+			case "whitty_date":
+				daBf = 'whitty_date';
 			default:
 				daBf = 'bf';
 		}
@@ -33,7 +42,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		bf = new Boyfriend(x, y, daBf);
 		add(bf);
-
+		add(cutscene);
+		cutscene.visible = false;
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
@@ -68,15 +78,16 @@ class GameOverSubstate extends MusicBeatSubstate
 			PlayState.loadRep = false;
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
-		{
-			FlxG.camera.follow(camFollow, LOCKON, 0.01);
-		}
-
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
+			//FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
+			cutscene.visible = true;
+			cutscene.animation.play("boom");
+			FlxG.sound.play(Paths.sound("explosion"));
+			FlxG.camera.fade(FlxColor.WHITE, 2, true);
 		}
+			if(sh > 0)FlxG.camera.shake(sh, 3);
+			sh -= 0.0008;
 
 		if (FlxG.sound.music.playing)
 		{
@@ -98,7 +109,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (!isEnding)
 		{
 			isEnding = true;
-			bf.playAnim('deathConfirm', true);
+			//bf.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)

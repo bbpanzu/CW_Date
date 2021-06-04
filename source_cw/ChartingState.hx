@@ -62,6 +62,7 @@ class ChartingState extends MusicBeatState
 	var highlight:FlxSprite;
 
 	var GRID_SIZE:Int = 40;
+	var GRID_SIZEY:Float = 40;
 
 	var dummyArrow:FlxSprite;
 
@@ -758,7 +759,7 @@ class ChartingState extends MusicBeatState
 		{
 			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
 			if (FlxG.keys.pressed.SHIFT)
-				dummyArrow.y = FlxG.mouse.y;
+				dummyArrow.y = Math.floor(FlxG.mouse.y / (640/12)) * (640/12);
 			else
 				dummyArrow.y = Math.floor(FlxG.mouse.y / GRID_SIZE) * GRID_SIZE;
 		}
@@ -843,6 +844,16 @@ class ChartingState extends MusicBeatState
 					resetSection(true);
 				else
 					resetSection();
+			}
+			if (FlxG.keys.pressed.G)
+			{
+				//GRID_SIZEY = 640 / 12;
+				trace(GRID_SIZEY );
+			}
+			if (FlxG.keys.justReleased.G)
+			{
+				//GRID_SIZEY = 40;
+				trace(GRID_SIZEY );
 			}
 
 			if (FlxG.mouse.wheel != 0)

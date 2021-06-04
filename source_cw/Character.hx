@@ -513,10 +513,10 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT-alt', 'carol alt left', 24, false);
 				animation.addByPrefix('singRIGHT-alt', 'carol alt right', 24, false);
 				
-				animation.addByPrefix('singUP-dance', 'carol alt up', 24, false);
-				animation.addByPrefix('singDOWN-dance', 'carol alt down', 24, false);
-				animation.addByPrefix('singLEFT-dance', 'carol alt left', 24, false);
-				animation.addByPrefix('singRIGHT-dance', 'carol alt right', 24, false);
+				animation.addByPrefix('singUP-dance', 'carol dance up', 24, false);
+				animation.addByPrefix('singDOWN-dance', 'carol dance down', 24, false);
+				animation.addByPrefix('singLEFT-dance', 'carol dance left', 24, false);
+				animation.addByPrefix('singRIGHT-dance', 'carol dance right', 24, false);
 
 				addOffset('danceLeft');
 				addOffset('danceRight');
@@ -568,9 +568,9 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHTmiss', 'whitty miss left', 24, false);
 				animation.addByPrefix('singLEFTmiss', 'whitty miss right', 24, false);
 
-				animation.addByPrefix('firstDeath', "whitty idle", 24, false);
-				animation.addByPrefix('deathLoop', "whitty idle", 24, true);
-				animation.addByPrefix('deathConfirm', "whitty idle", 24, false);
+				animation.addByPrefix('firstDeath', "whitty death", 24, false);
+				animation.addByPrefix('deathLoop', "whitty death", 24, true);
+				animation.addByPrefix('deathConfirm', "whitty death", 24, false);
 
 				addOffset('idle');
 				addOffset('idle-alt');
@@ -585,7 +585,7 @@ class Character extends FlxSprite
 				addOffset("singLEFT-alt");
 				addOffset("singDOWN-alt");
 				
-				addOffset("singUP-dance");
+				addOffset("singUP-dance",0,127.15);
 				addOffset("singRIGHT-dance",0,30);
 				addOffset("singLEFT-dance",0,30);
 				addOffset("singDOWN-dance");
@@ -683,6 +683,7 @@ class Character extends FlxSprite
 					}
 				case 'carol_date':
 						danced = PlayState.cbeat % 2 == 0;
+						PlayState.didthenote = 10;
 					if(!PlayState.dancing){
 						if (danced)
 							playAnim('danceRight'+altAnim);
@@ -730,7 +731,10 @@ class Character extends FlxSprite
 					else
 						playAnim('danceLeft');
 				default:
-					if(!PlayState.dancing)playAnim('idle'+altAnim);
+						PlayState.didthekey = 10;
+					if (!PlayState.dancing){
+						playAnim('idle'+altAnim);
+					}
 			}
 		}
 	}
