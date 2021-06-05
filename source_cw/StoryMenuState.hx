@@ -179,7 +179,6 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 165");
 		add(datePort);
-		datePort.visible = false;
 		super.create();
 	}
 

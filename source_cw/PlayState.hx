@@ -713,10 +713,12 @@ class PlayState extends MusicBeatState
 				}
 			case 'date':
 				{
+					dancing = false;
 					defaultCamZoom = 1;
 					curStage = 'date';
 						switch (SONG.song.toLowerCase()){
 							case  "perfume":
+							defaultCamZoom = 1;
 								
 								var citycolor:FlxSprite = new FlxSprite( -125, -150.75);
 								citycolor.loadGraphic(Paths.image("date/citycolor"));
@@ -792,6 +794,7 @@ class PlayState extends MusicBeatState
 								add(wallbg);
 							
 							case "whitroll":
+								defaultCamZoom = 1;
 								var sky_bg:FlxSprite = new FlxSprite(-21,-236);
 								sky_bg.loadGraphic(Paths.image("date/sky_bg"));
 								sky_bg.scrollFactor.set(0.1,0.1);
