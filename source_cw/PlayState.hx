@@ -932,7 +932,10 @@ class PlayState extends MusicBeatState
 								title.screenCenter();
 								title.animation.play(SONG.song.toLowerCase());
 								title.scrollFactor.set();
-								
+								if (!isStoryMode){
+									film.alpha = 0;
+									title.alpha = 0;
+								}
 								add(film);
 								add(title);
 				}
@@ -1477,7 +1480,6 @@ class PlayState extends MusicBeatState
 				'weeb/pixelUI/set-pixel',
 				'weeb/pixelUI/date-pixel'
 			]);
-
 			var introAlts:Array<String> = introAssets.get('default');
 			var altSuffix:String = "";
 
@@ -2518,8 +2520,10 @@ class PlayState extends MusicBeatState
 						if (dancing){
 							camFollow.y = boyfriend.getMidpoint().y - 200;
 						}else{
-							camFollow.x = boyfriend.getMidpoint().x;
-							camFollow.y = boyfriend.getMidpoint().y - 160;
+							if (!SONG.song.toLowerCase() == "heartbass"){
+								camFollow.x = boyfriend.getMidpoint().x;
+								camFollow.y = boyfriend.getMidpoint().y - 160;
+							}
 						}
 				}
 			}
