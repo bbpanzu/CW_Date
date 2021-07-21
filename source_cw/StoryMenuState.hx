@@ -24,7 +24,7 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
-		['Whitroll', 'Perfume', 'Heartbass']
+		['Whitroll','Perfume','Heartbass']
 	];
 	var curDifficulty:Int = 1;
 

@@ -110,7 +110,7 @@ class Main extends Sprite
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
-		trace("TODO:\n\t-Animate Carol Dancing [X]\n\t-Add LNO in BG [X]\n\t-Set Updike velocity instead of Tween [X]\n\t-Make Credits [ ]\n\t-Finish Anthem [X]");
+		trace("TODO:\n\t-Animate Carol Dancing [X]\n\t-Add JOJO in BG [X]\n\t-Add KERMO GIOVANA CHARS in BG [X]\n\t-Set Updike velocity instead of Tween [X]\n\t-Make Credits [X]\n\t-Finish Anthem [X]\n\t-ADD KAYA [X]\n\t-ADD JORDOPRICE [X]");
 		#end
 	}
 

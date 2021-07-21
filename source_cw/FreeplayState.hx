@@ -68,6 +68,7 @@ class FreeplayState extends MusicBeatState
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
+		bgColor = 0xFF4D1B30;
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'+pootshit[TitleState.fun]));
 		add(bg);

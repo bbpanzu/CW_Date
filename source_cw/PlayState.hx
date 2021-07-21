@@ -92,6 +92,8 @@ class PlayState extends MusicBeatState
 	var datBitchWasSinging:Bool = false;
 	public static var rep:Replay;
 	public static var loadRep:Bool = false;
+	public  var spetesucks:Bool = true;
+	public var moveNOWWW:Bool = true;
 	var film:FlxSprite = new FlxSprite(0, 0);
 	var title:FlxSprite = new FlxSprite(0, 0);
 	public static var noteBools:Array<Bool> = [false, false, false, false];
@@ -207,8 +209,10 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var replayTxt:FlxText;
 	var swagCounter:Int = 0;
-	var chars = ["daliaayanna", "sarvruv", "koukapi","selsunday","macybob","tabiagoti","garcanchor","macybob","susyukichi","eddsworld"];
-	var chars2 = ["mikutricky", "hexabigail", "nenedarnell","pompomstatic","lnosans","unified","starlight"];
+	var chars:Array<String> = ["daliaayanna", "sarvruv", "koukapi","selsunday","macybob","tabifunsize","solnik","garcanchor","susyukichi","eddsworld","silly","jadssmokey","cvalkolsan","violetruria","bobbosip","jojo","dionnekaya"];
+	var chars2:Array<String> = ["hexabigail","mikutricky", "nenedarnell" ,"pompomstatic","lnosans","unified","starlight","weedbud","natecre","kermojordo"];
+	public static var charswhohavewalked:Array<String> = [];
+	public static var charswhohavewalked2:Array<String> = [];
 
 	public static var campaignScore:Int = 0;
 
@@ -281,6 +285,7 @@ class PlayState extends MusicBeatState
 				storyDifficultyText = "Hard";
 		}
 
+		bgColor = 0xFF000000;
 		iconRPC = SONG.player2;
 
 		// To avoid having duplicate images in Discord assets
@@ -740,28 +745,17 @@ class PlayState extends MusicBeatState
 								citybg.antialiasing = true;
 								
 								
-								characters_walking = new FlxSprite( -192.05, 50.05);
-								characters_walking.frames = Paths.getSparrowAtlas("date/characters_walking");
-								characters_walking.scrollFactor.set(0.9,0.9);
-								characters_walking.active = true;
-								characters_walking.antialiasing = true;
-								characters_walking.animation.addByIndices("daliaayanna","characters_walking", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],"", 24,true);
-								characters_walking.animation.addByIndices("sarvruv","characters_walking", [12,13,14,15,16,17,18,19,20,21,22,23],"", 24,true);
-								characters_walking.animation.addByIndices("koukapi","characters_walking", [24,25,26,27,28,29,30,31,32,33,34,35],"", 24,true);
-								characters_walking.animation.addByIndices("selsunday", "characters_walking", [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47], "", 24, true);
-								
-								characters_walking.animation.addByIndices("macybob","characters_walking", [48,49,50,51,52,53,54,55,56,57,58,59],"", 24,true);
-								characters_walking.animation.addByIndices("tabiagoti","characters_walking", [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71],"", 24,true);
-								characters_walking.animation.addByIndices("solnik","characters_walking", [72,73,74,75,76,77,78,79,80,81,82,83],"", 24,true);
-								characters_walking.animation.addByIndices("garcanchor","characters_walking", [84,85,86,87,88,89,90,91,92,93,94,95],"", 24,true);
-								characters_walking.animation.addByIndices("susyukichi","characters_walking", [96,97,98,99,100,101,102,103,104,105,106,107],"", 24,true);
-								characters_walking.animation.addByIndices("eddsworld","characters_walking", [108,109,110,111,112,113,114,115,116,117,118,119],"", 24,true);
-								/**/
-								characters_walking2 = new FlxSprite( -192.05, 50.05);
+								characters_walking2 = new FlxSprite( 22.15, 60.05);
 								characters_walking2.frames = Paths.getSparrowAtlas("date/characters_walking2");
 								characters_walking2.scrollFactor.set(0.85,0.85);
 								characters_walking2.active = true;
 								characters_walking2.antialiasing = true;
+								
+								for(i in 0...chars2.length){
+									characters_walking2.animation.addByIndices(chars2[i], "characters_walking_bg", [0+i*12, 1+i*12, 2+i*12, 3+i*12, 4+i*12, 5+i*12, 6+i*12, 7+i*12, 8+i*12, 9+i*12, 10+i*12, 11+i*12], "", 24, true);
+								}
+								/*
+								
 								characters_walking2.animation.addByIndices("hexabigail","characters_walking_bg", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],"", 24,true);
 								characters_walking2.animation.addByIndices("mikutricky","characters_walking_bg", [12,13,14,15,16,17,18,19,20,21,22,23],"", 24,true);
 								characters_walking2.animation.addByIndices("nenedarnell","characters_walking_bg", [24,25,26,27,28,29,30,31,32,33,34,35],"", 24,true);
@@ -772,11 +766,10 @@ class PlayState extends MusicBeatState
 								characters_walking2.animation.addByIndices("starlight","characters_walking_bg", [72,73,74,75,76,77,78,79,80,81,82,83],"", 24,true);
 								//characters_walking.animation.addByIndices("garcanchor","characters_walking", [84,85,86,87,88,89,90,91,92,93,94,95],"", 24,true);
 								//characters_walking.animation.addByIndices("susyukichi","characters_walking", [96,97,98,99,100,101,102,103,104,105,106,107],"", 24,true);
-								//characters_walking.animation.addByIndices("eddsworld","characters_walking", [108,109,110,111,112,113,114,115,116,117,118,119],"", 24,true);
+								//characters_walking.animation.addByIndices("eddsworld","characters_walking", [108,109,110,111,112,113,114,115,116,117,118,119],"", 24,true);*/
 								
-								characters_walking2.animation.play(chars2[FlxG.random.int(0,chars2.length)]);
-								characters_walking.animation.play(chars[FlxG.random.int(0,chars.length)]);
-								
+								characters_walking2.animation.play(chars2[FlxG.random.int(0,chars2.length-1)]);
+								initBGChars();
 								
 								var blackshit:FlxSprite = new FlxSprite(0, -1174.35).makeGraphic(1280,400,FlxColor.BLACK);
 								blackshit.active = false;
@@ -788,8 +781,8 @@ class PlayState extends MusicBeatState
 								add(citycolor);
 								add(cityfarbg);
 								add(citybg);
-								add(characters_walking2);
-								add(characters_walking);
+								if(FlxG.save.data.distractions)add(characters_walking2);
+								if(FlxG.save.data.distractions)add(characters_walking);
 								add(heartsThings);
 								add(wallbg);
 							
@@ -871,7 +864,7 @@ class PlayState extends MusicBeatState
 								
 								var chairs:FlxSprite = new FlxSprite(286.25, 351.15);
 								var l = "";
-								if (storyDifficulty == 0) l = " copy";
+								if (storyDifficulty == 0) l = " copy";//kade chair
 								chairs.loadGraphic(Paths.image("date/chairs"+l));
 								chairs.antialiasing = true;
 								
@@ -893,6 +886,9 @@ class PlayState extends MusicBeatState
 								table.antialiasing = true;
 								
 								
+								initBGChars();
+								
+								
 								
 								add(sky_heartbass);
 								add(bg_hb);
@@ -901,6 +897,10 @@ class PlayState extends MusicBeatState
 								add(farris_wheel);
 								add(farris_seat);
 								add(updictionary);
+								
+								if(FlxG.save.data.distractions)add(characters_walking);
+								characters_walking.y = -10;
+								
 								
 								add(backboppers);
 								add(frontboppers);
@@ -1329,6 +1329,41 @@ class PlayState extends MusicBeatState
 
 		super.create();
 	}
+	
+	public function initBGChars() 
+	{
+		
+								characters_walking = new FlxSprite( 820, -60);
+								characters_walking.frames = Paths.getSparrowAtlas("date/characters_walking");
+								characters_walking.scrollFactor.set(0.9,0.9);
+								characters_walking.active = true;
+								characters_walking.antialiasing = true;
+								
+								
+								for(i in 0...chars.length){
+									characters_walking.animation.addByIndices(chars[i], "characters_walking", [0+i*12, 1+i*12, 2+i*12, 3+i*12, 4+i*12, 5+i*12, 6+i*12, 7+i*12, 8+i*12, 9+i*12, 10+i*12, 11+i*12], "", 24, true);
+								}
+								/*
+								
+								characters_walking.animation.addByIndices("daliaayanna","characters_walking", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],"", 24,true);
+								characters_walking.animation.addByIndices("sarvruv","characters_walking", [12,13,14,15,16,17,18,19,20,21,22,23],"", 24,true);
+								characters_walking.animation.addByIndices("koukapi","characters_walking", [24,25,26,27,28,29,30,31,32,33,34,35],"", 24,true);
+								characters_walking.animation.addByIndices("selsunday", "characters_walking", [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47], "", 24, true);
+								
+								characters_walking.animation.addByIndices("macybob","characters_walking", [48,49,50,51,52,53,54,55,56,57,58,59],"", 24,true);
+								characters_walking.animation.addByIndices("tabifunsize","characters_walking", [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71],"", 24,true);
+								characters_walking.animation.addByIndices("solnik","characters_walking", [72,73,74,75,76,77,78,79,80,81,82,83],"", 24,true);
+								characters_walking.animation.addByIndices("garcanchor","characters_walking", [84,85,86,87,88,89,90,91,92,93,94,95],"", 24,true);
+								characters_walking.animation.addByIndices("susyukichi","characters_walking", [96,97,98,99,100,101,102,103,104,105,106,107],"", 24,true);
+								characters_walking.animation.addByIndices("eddsworld","characters_walking", [108,109,110,111,112,113,114,115,116,117,118,119],"", 24,true);
+								characters_walking.animation.addByIndices("silly","characters_walking", [120,121,122,123,124,125,126,127,128,129,130,131],"", 24,true);
+								characters_walking.animation.addByIndices("jadssmokey","characters_walking", [132,133,134,135,136,137,138,139,140,141,142,143],"", 24,true);
+								characters_walking.animation.addByIndices("cvalkolsan","characters_walking", [144,145,146,147,148,149,150,151,152,153,154,155],"", 24,true);
+								*/characters_walking.animation.addByIndices("dionnekaya", "characters_walking", [192,193,194,195,196,197,198,199,200,201,202,203], "", 24, true);
+								
+								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);
+								
+	}
 	function dateWeekIntro(){
 		
 						camFollow.y = -900;
@@ -1498,7 +1533,7 @@ class PlayState extends MusicBeatState
 	
 	go = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 		
-					FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0);//preloading the sournds
+					FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0);//
 					FlxG.sound.play(Paths.sound('intro2' + altSuffix), 0);
 					FlxG.sound.play(Paths.sound('intro1' + altSuffix), 0);
 					FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0);
@@ -1509,10 +1544,10 @@ class PlayState extends MusicBeatState
 				//	FlxG.sound.play(Paths.sound('intro3' + altSuffix), 0.6);
 					
 					dateThingyEnded = true;
-					if(!isStoryMode){
+					film.animation.stop();
 					film.active = false;
 					title.active = false;
-					}
+					
 					FlxTween.tween(film, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 					FlxTween.tween(title, {alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.cubeInOut});
 				case 1:
@@ -1772,7 +1807,7 @@ class PlayState extends MusicBeatState
 					if (sustainNote.mustPress)
 					{	
 						if (notestrumtimes1.contains(Math.round(sustainNote.strumTime))){
-							trace("found a double note");
+							//trace("found a double note");
 							sustainNote.doubleNote = true;
 						}
 						notestrumtimes1.push(Math.round(sustainNote.strumTime));
@@ -1780,7 +1815,7 @@ class PlayState extends MusicBeatState
 						sustainNote.x += FlxG.width / 2; // general offset
 					}else{
 						if (notestrumtimes2.contains(Math.round(sustainNote.strumTime))){
-							trace("found a double note");
+							//trace("found a double note");
 							sustainNote.doubleNote = true;
 							notestrumtimes2.push(Math.round(sustainNote.strumTime));
 						}
@@ -1798,7 +1833,7 @@ class PlayState extends MusicBeatState
 				{
 					
 						if (notestrumtimes1.contains(Math.round(swagNote.strumTime))){
-							trace("found a double note");
+							//trace("found a double note");
 							swagNote.doubleNote = true;
 							notestrumtimes1.push(Math.round(swagNote.strumTime));
 						}
@@ -1810,7 +1845,7 @@ class PlayState extends MusicBeatState
 				{
 					
 						if (notestrumtimes2.contains(Math.round(swagNote.strumTime))){
-							trace("found a double note");
+							//trace("found a double note");
 							swagNote.doubleNote = true;
 							notestrumtimes2.push(Math.round(swagNote.strumTime));
 						}
@@ -2107,7 +2142,7 @@ class PlayState extends MusicBeatState
 		}
 
 		#end
-
+		var stopSTOPITSTOPITNOW:Int = 270;
 		if (currentFrames == FlxG.save.data.fpsCap)
 		{
 			for(i in 0...notesHitArray.length)
@@ -2146,47 +2181,72 @@ class PlayState extends MusicBeatState
 				}
 				
 			case 'date':
-				if (SONG.song.toLowerCase() == "perfume" && FlxG.save.data.distractions){// only on perfume. probably a better way to do this
+				if ((SONG.song.toLowerCase() == "perfume" || SONG.song.toLowerCase() == "heartbass") && FlxG.save.data.distractions && characters_walking.animation != null && characters_walking.animation.curAnim != null){// only on perfume. probably a better way to do this
 					
-					if(characters_walking.animation.curAnim.name == "daliaayanna" || characters_walking.animation.curAnim.name == "koukapi"|| characters_walking.animation.curAnim.name == "macybob"|| characters_walking.animation.curAnim.name == "solnik"|| characters_walking.animation.curAnim.name == "susyukichi"){
-						characters_walking.x -= 2;
-						if (characters_walking.x < -2001.45){
-							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name){//if it's still the same character
-								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);//change the character
-							}
-						}
-					}else if (characters_walking.animation.curAnim.name == "selsunday" || characters_walking.animation.curAnim.name == "jojo" ){
-						characters_walking.x += 8;
+					if (characters_walking.animation.curAnim.name == "selsunday" || characters_walking.animation.curAnim.name == "jojo" ){
+						if(moveNOWWW)characters_walking.x += 8;
 						if (characters_walking.x > 1434.4){
-							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name){//if it's still the same character
-								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);//change the character (i should make this a function)
-							}
+							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name && charswhohavewalked.contains(characters_walking.animation.curAnim.name)){//if it's still the same character
+								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length - 1)]);//change the character (i should make this a function)
+								if (curBeat > stopSTOPITSTOPITNOW) moveNOWWW = false;
+							
+								}else{
+									charswhohavewalked.push(characters_walking.animation.curAnim.name);
+								}
 						}
-					}else{
-						characters_walking.x += 2;
+					}else if(chars.lastIndexOf(characters_walking.animation.curAnim.name) % 2 == 0){
+						if(moveNOWWW)characters_walking.x -= 2;
+						if (characters_walking.x < -900){
+							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name  && charswhohavewalked.contains(characters_walking.animation.curAnim.name)){//if it's still the same character
+								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length - 1)]);//change the character
+								if (curBeat > stopSTOPITSTOPITNOW) moveNOWWW = false;
+							
+								}else{
+									if(!charswhohavewalked.contains(characters_walking.animation.curAnim.name))charswhohavewalked.push(characters_walking.animation.curAnim.name);
+								}
+						}
+					}else {
+						if(moveNOWWW)characters_walking.x += 2;
 						if (characters_walking.x > 1434.4){
-							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name){//if it's still the same character
+							if (characters_walking.animation.curAnim.name == characters_walking.animation.curAnim.name  && charswhohavewalked.contains(characters_walking.animation.curAnim.name)){//if it's still the same character
 								characters_walking.animation.play(chars[FlxG.random.int(0, chars.length-1)]);//change the character (i should make this a function)
-							}
+								if (curBeat > stopSTOPITSTOPITNOW) moveNOWWW = false;
+								
+								}else{
+									if(!charswhohavewalked.contains(characters_walking.animation.curAnim.name))charswhohavewalked.push(characters_walking.animation.curAnim.name);
+								}
 						}
 					}
 					
-					if(characters_walking2.animation.curAnim.name == "nenedarnell" || characters_walking2.animation.curAnim.name == "hexabigail"|| characters_walking2.animation.curAnim.name == "lnosans"|| characters_walking2.animation.curAnim.name == "starlight"){
-						characters_walking2.x -= 2;
-						if (characters_walking2.x < -2001.45){
-							if (characters_walking2.animation.curAnim.name == characters_walking2.animation.curAnim.name){//if it's still the same character
-								characters_walking2.animation.play(chars2[FlxG.random.int(0, chars2.length-1)]);//change the character
+					
+					if(SONG.song.toLowerCase() == "perfume"){
+						if(chars2.lastIndexOf(characters_walking2.animation.curAnim.name) % 2 == 0){
+							characters_walking2.x -= 2.1;
+							if (characters_walking2.x < -1000 && characters_walking2.animation != null && characters_walking2.animation.curAnim != null){
+								if (characters_walking2.animation.curAnim.name == characters_walking2.animation.curAnim.name && charswhohavewalked2.contains(characters_walking2.animation.curAnim.name)){//if it's still the same character
+									characters_walking2.animation.play(chars2[FlxG.random.int(0, chars2.length-1)]);//change the character
+									
+								}else{
+									if(!charswhohavewalked2.contains(characters_walking2.animation.curAnim.name))charswhohavewalked2.push(characters_walking2.animation.curAnim.name);
+								}
 							}
-						}
-					}else{
-						characters_walking2.x += 2;
-						if (characters_walking2.x > 1434.4){
-							if (characters_walking2.animation.curAnim.name == characters_walking2.animation.curAnim.name){//if it's still the same character
-								characters_walking2.animation.play(chars2[FlxG.random.int(0, chars2.length-1)]);//change the character (i should make this a function)
+						}else{
+							characters_walking2.x += 2.1;
+							if (characters_walking2.x > 1634.4 && characters_walking2.animation != null && characters_walking2.animation.curAnim != null){
+								if (characters_walking2.animation.curAnim.name == characters_walking2.animation.curAnim.name && charswhohavewalked2.contains(characters_walking2.animation.curAnim.name)){//if it's still the same character
+									
+									characters_walking2.animation.play(chars2[FlxG.random.int(0, chars2.length-1)]);//change the character (i should make this a function)
+									
+								}else{
+									if(!charswhohavewalked2.contains(characters_walking2.animation.curAnim.name))charswhohavewalked2.push(characters_walking2.animation.curAnim.name);
+								}
 							}
 						}
 					}
 				}
+				
+				if (charswhohavewalked.length >= chars.length) charswhohavewalked = [];
+				if (charswhohavewalked2.length >= chars2.length) charswhohavewalked2 = [];
 				if (SONG.song.toLowerCase() == "heartbass" && farris_wheel != null){// only on perfume. probably a better way to do this
 					if(FlxG.save.data.distractions)farris_wheel.angle += 0.25;
 					plane.x -= 1;
@@ -2520,9 +2580,8 @@ class PlayState extends MusicBeatState
 						if (dancing){
 							camFollow.y = boyfriend.getMidpoint().y - 200;
 						}else{
-							if (!SONG.song.toLowerCase() == "heartbass"){
-								camFollow.x = boyfriend.getMidpoint().x;
-								camFollow.y = boyfriend.getMidpoint().y - 160;
+							if (SONG.song.toLowerCase() != "heartbass"){
+								camFollow.x = 640;
 							}
 						}
 				}
@@ -2869,12 +2928,18 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					//FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 					transIn = FlxTransitionableState.defaultTransIn;
 					transOut = FlxTransitionableState.defaultTransOut;
 
-					FlxG.switchState(new StoryMenuState());
+					
+					if (storyDifficulty == 2){
+						FlxG.switchState(new TrueEnding());
+					}else{
+						FlxG.switchState(new Ending());
+					}
+					
 
 					#if windows
 					if (luaModchart != null)
@@ -3874,12 +3939,12 @@ class PlayState extends MusicBeatState
 			if (dancing){
 				
 				table.visible = true;
+				if (FlxG.save.data.distractions){
 				boyfriend.y += 20;
 				dad.y += 20;
 				backboppers.y += 30;
 				frontboppers.y += 30;
 				//trace(bfy + "," + boyfriend.y);
-				if (FlxG.save.data.distractions){
 					defaultCamZoom = 0.9;
 					FlxTween.tween(boyfriend, {y:bfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
 					FlxTween.tween(dad, {y:gfy}, (Conductor.stepCrochet * 3 / 1000), {ease:FlxEase.circInOut});
